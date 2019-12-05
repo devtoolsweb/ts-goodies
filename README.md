@@ -1,4 +1,4 @@
-# Aperos RPC common
+# Aperos TypeScript goodies
 
 Useful TypeScript classes suitable for both browser and Node.js.
 The development branch can contain experimental code that is under
