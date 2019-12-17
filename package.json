@@ -2,11 +2,14 @@
   "author": "<aperos.dev@gmail.com>",
   "description": "Useful TypeScript classes suitable for both browser and Node.js",
   "devDependencies": {
+    "@types/jest": "latest",
     "dts-bundle": "latest",
+    "jest": "latest",
     "make-dts-bundle": "latest",
     "rollup": "latest",
     "rollup-plugin-terser": "latest",
     "rollup-plugin-typescript2": "latest",
+    "ts-jest": "latest",
     "ts-node": "latest",
     "typescript": "latest"
   },
@@ -18,7 +21,8 @@
     "build-dts": "make-dts-bundle",
     "build-production": "BUILD=production npm run build",
     "clean": "rm -rf build dist",
-    "prepare": "npm run clean && npm run build-production"
+    "prepare": "npm run clean && npm run build-production",
+    "test": "jest"
   },
   "types": "dist/index.d.ts",
   "version": "0.0.2"
