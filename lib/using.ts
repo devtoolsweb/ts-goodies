@@ -1,0 +1,14 @@
+interface IDisposable {
+  dispose(): Promise<void>
+}
+
+export async function using<T extends IDisposable>(
+  resource: T,
+  body: (resource: T) => Promise<void>
+) {
+  try {
+    await body(resource)
+  } finally {
+    await resource.dispose()
+  }
+}
