@@ -1,14 +1,12 @@
 import { Memoize } from '../lib'
 
 class TestClass {
-  readonly guards: Partial<Record<keyof TestClass, true>> = {}
+  readonly counters: Partial<Record<keyof TestClass, number>> = {}
 
   @Memoize()
-  get calculatedProperty () {
-    if (this.guards['calculatedProperty']) {
-      throw new Error('Undefined behavior')
-    }
-    this.guards['calculatedProperty'] = true
+  get calculatedProperty() {
+    this.counters['calculatedProperty'] =
+      (this.counters['calculatedProperty'] || 0) + 1
     return Array.from({ length: 100 }, (_, i) => i).reduce(
       (s, v) => s + v * v,
       0
@@ -16,11 +14,9 @@ class TestClass {
   }
 
   @Memoize()
-  methodWithoutArgs () {
-    if (this.guards['methodWithoutArgs']) {
-      throw new Error('Undefined behavior')
-    }
-    this.guards['methodWithoutArgs'] = true
+  methodWithoutArgs() {
+    this.counters['methodWithoutArgs'] =
+      (this.counters['methodWithoutArgs'] || 0) + 1
     return Array.from({ length: 100 }, (_, i) => i).reduce(
       (s, v) => s + v * v * v,
       0
@@ -28,29 +24,32 @@ class TestClass {
   }
 
   @Memoize()
-  methodWithArgs (a: number, b: number) {
-    if (this.guards['methodWithArgs']) {
-      throw new Error('Undefined behavior')
-    }
-    this.guards['methodWithArgs'] = true
+  methodWithArgs(a: number, b: number) {
+    this.counters['methodWithArgs'] = (this.counters['methodWithArgs'] || 0) + 1
     return a * a + b * b
   }
 }
 
-test('Calculated property', () => {
+test('should calculate the property once', () => {
   const c = new TestClass()
   expect(c.calculatedProperty).toBe(328350)
+  expect(c.calculatedProperty).toBe(328350)
+  expect(c.counters['calculatedProperty']).toBe(1)
 })
 
-test('Method without args', () => {
+test('should call method once', () => {
   const c = new TestClass()
   c.methodWithoutArgs()
   c.methodWithoutArgs()
+  expect(c.counters['methodWithoutArgs']).toBe(1)
 })
 
-test('Method with args', () => {
+test('should call method with arguments once', () => {
   const c = new TestClass()
   c.methodWithArgs(100, 200)
   c.methodWithArgs(100, 200)
-  expect(() => c.methodWithArgs(300, 400)).toThrow(Error)
+  expect(c.counters['methodWithArgs']).toBe(1)
+  c.methodWithArgs(300, 400)
+  c.methodWithArgs(300, 400)
+  expect(c.counters['methodWithArgs']).toBe(2)
 })

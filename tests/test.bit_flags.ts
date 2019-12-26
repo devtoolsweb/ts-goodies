@@ -9,7 +9,7 @@ interface TestClass {
 @BitFlagged
 class TestClass {}
 
-test('Set flags', () => {
+test('bit flags should have exact values', () => {
   const a = new TestClass()
   const b = new TestClass()
   a.flags

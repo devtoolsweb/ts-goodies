@@ -29,46 +29,46 @@ class BitFlags<T extends string> implements IBitFlags<T> {
 
   readonly bitIndexMap!: Map<T, number>
 
-  get bits (): number {
+  get bits(): number {
     return this[bfSym] || 0
   }
 
-  set bits (value: number) {
+  set bits(value: number) {
     this[bfSym] = value
   }
 
-  get exists (): boolean {
+  get exists(): boolean {
     return !!this[bfSym]
   }
 
-  isSet (flag: T): boolean {
+  isSet(flag: T): boolean {
     const xs = this.bitIndexMap
     return xs.has(flag) && (this.bits & (1 << xs.get(flag)!)) !== 0
   }
 
-  set (flag: T): this {
+  set(flag: T): this {
     const xs = this.bitIndexMap
     this.addFlagIndex(flag)
     this.bits |= 1 << xs.get(flag)!
     return this
   }
 
-  setValue (flag: T, value: boolean): this {
+  setValue(flag: T, value: boolean): this {
     return value ? this.set(flag) : this.unset(flag)
   }
 
-  toggle (flag: T): this {
+  toggle(flag: T): this {
     return this.setValue(flag, this.isSet(flag))
   }
 
-  unset (flag: T): this {
+  unset(flag: T): this {
     const xs = this.bitIndexMap
     this.addFlagIndex(flag)
     this.bits &= ~(1 << xs.get(flag)!)
     return this
   }
 
-  private addFlagIndex (flag: T): void {
+  private addFlagIndex(flag: T): void {
     const m = this.bitIndexMap
     if (!m.has(flag)) {
       if (m.size === BitFlags.maxFlags) {
@@ -87,7 +87,7 @@ class BFInfo {
 /**
  * This decorator adds the ability to use bit flags in the class.
  */
-export function BitFlagged (ctor: Function) {
+export function BitFlagged(ctor: Function) {
   const p = ctor.prototype
   if (!bfMap.has(p)) {
     bfMap.set(p, new BFInfo())
@@ -105,15 +105,15 @@ export function BitFlagged (ctor: Function) {
       Object.getOwnPropertyNames(fp)
         .filter(k => k !== 'constructor')
         .forEach(k => {
-          p[k] = (fp as any)[k]
+          p[k] = fp[k]
         })
       Object.defineProperty(p, 'bitIndexMap', {
-        get: function () {
+        get: function() {
           return info.bitIndexMap
         }
       })
       Object.defineProperty(p, 'flags', {
-        get: function () {
+        get: function() {
           return this
         }
       })

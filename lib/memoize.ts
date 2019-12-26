@@ -9,17 +9,19 @@ export const Memoize = (hashFn?: MemoizeHashFunction) => {
     const key = Symbol.for(`${target.constructor.name}.${propertyKey}`)
     if (descriptor.value instanceof Function) {
       descriptor.value = makeFunction(key, descriptor.value, hashFn)
-    } else if (descriptor.get != null) {
+    } else if (descriptor.get) {
       descriptor.get = makeGetter(key, descriptor)
     } else {
-      throw 'The decorator @Memoize() is applicable only to a method or a property get accessor'
+      throw new Error(
+        'The decorator @Memoize() is applicable only to a method or a property get accessor'
+      )
     }
   }
 }
 
 const makeGetter = (key: symbol, descriptor: PropertyDescriptor) => {
   const getter = descriptor.get!
-  return function (this: any, ...args: []) {
+  return function(this: any, ...args: []) {
     if (this.hasOwnProperty(key)) {
       return this[key]
     } else {
@@ -40,7 +42,7 @@ const makeFunction = (
   sourceFn: Function,
   hashFn?: MemoizeHashFunction
 ) => {
-  return function (this: any, ...args: any[]) {
+  return function(this: any, ...args: any[]) {
     let cache = this
     let key = propertyKey
     let value
