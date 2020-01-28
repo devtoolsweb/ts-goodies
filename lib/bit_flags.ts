@@ -3,6 +3,9 @@
  * for 64-bit platforms. Bit flags allow all boolean properties
  * to fit into one 8-byte numeric property,
  * allocating 1 bit to each boolean.
+ *
+ * TODO: When adding a flag, optionally add an object property
+ * with the corresponding name for quick access.
  */
 const bfMap = new WeakMap<object, BFInfo>()
 const bfSym = Symbol('BitFlags')
@@ -11,8 +14,7 @@ export interface IBitFlags<T extends string> {
   readonly bits: number
   readonly exists: boolean
   isSet(flag: T): boolean
-  set(flag: T): this
-  setValue(flag: T, value: boolean): this
+  setFlag(flag: T, value?: boolean): this
   toggle(flag: T): this
   unset(flag: T): this
 }
@@ -46,26 +48,23 @@ class BitFlags<T extends string> implements IBitFlags<T> {
     return xs.has(flag) && (this.bits & (1 << xs.get(flag)!)) !== 0
   }
 
-  set(flag: T): this {
+  setFlag(flag: T, value?: boolean): this {
     const xs = this.bitIndexMap
     this.addFlagIndex(flag)
-    this.bits |= 1 << xs.get(flag)!
+    if (value === false) {
+      this.bits &= ~(1 << xs.get(flag)!)
+    } else {
+      this.bits |= 1 << xs.get(flag)!
+    }
     return this
-  }
-
-  setValue(flag: T, value: boolean): this {
-    return value ? this.set(flag) : this.unset(flag)
   }
 
   toggle(flag: T): this {
-    return this.setValue(flag, this.isSet(flag))
+    return this.setFlag(flag, !this.isSet(flag))
   }
 
   unset(flag: T): this {
-    const xs = this.bitIndexMap
-    this.addFlagIndex(flag)
-    this.bits &= ~(1 << xs.get(flag)!)
-    return this
+    return this.setFlag(flag, false)
   }
 
   private addFlagIndex(flag: T): void {
