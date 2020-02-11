@@ -14,7 +14,13 @@ export interface IBitFlags<T extends string> {
   readonly bits: number
   readonly exists: boolean
   isSet(flag: T): boolean
-  setFlag(flag: T, value?: boolean): this
+  /*
+   * WARNING: Do not merge methods setFlag() and setFlagValue()
+   * into one common method! This may result in an incorrect flag value
+   * when passing optional parameters.
+   */
+  setFlag(flag: T): this
+  setFlagValue(flag: T, value: boolean): this
   toggle(flag: T): this
   unset(flag: T): this
 }
@@ -48,23 +54,27 @@ class BitFlags<T extends string> implements IBitFlags<T> {
     return xs.has(flag) && (this.bits & (1 << xs.get(flag)!)) !== 0
   }
 
-  setFlag(flag: T, value = true): this {
+  setFlag(flag: T): this {
+    return this.setFlagValue(flag, true)
+  }
+
+  setFlagValue(flag: T, value: boolean): this {
     const xs = this.bitIndexMap
     this.addFlagIndex(flag)
-    if (!value) {
-      this.bits &= ~(1 << xs.get(flag)!)
-    } else {
+    if (value) {
       this.bits |= 1 << xs.get(flag)!
+    } else {
+      this.bits &= ~(1 << xs.get(flag)!)
     }
     return this
   }
 
   toggle(flag: T): this {
-    return this.setFlag(flag, !this.isSet(flag))
+    return this.setFlagValue(flag, !this.isSet(flag))
   }
 
   unset(flag: T): this {
-    return this.setFlag(flag, false)
+    return this.setFlagValue(flag, false)
   }
 
   private addFlagIndex(flag: T): void {
