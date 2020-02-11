@@ -48,10 +48,10 @@ class BitFlags<T extends string> implements IBitFlags<T> {
     return xs.has(flag) && (this.bits & (1 << xs.get(flag)!)) !== 0
   }
 
-  setFlag(flag: T, value?: boolean): this {
+  setFlag(flag: T, value = true): this {
     const xs = this.bitIndexMap
     this.addFlagIndex(flag)
-    if (value === false) {
+    if (!value) {
       this.bits &= ~(1 << xs.get(flag)!)
     } else {
       this.bits |= 1 << xs.get(flag)!

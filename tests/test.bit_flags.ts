@@ -13,14 +13,14 @@ test('bit flags should have exact values', () => {
   const a = new TestClass()
   const b = new TestClass()
   a.flags
-    .set('apple')
-    .set('banana')
-    .set('orange')
+    .setFlag('apple')
+    .setFlag('banana')
+    .setFlag('orange')
 
   b.flags
-    .set('lime')
-    .set('plum')
-    .set('banana')
+    .setFlag('lime')
+    .setFlag('plum')
+    .setFlag('banana')
 
   expect(a.flags.bits).toBe(0b111)
   expect(b.flags.bits).toBe(0b11010)
