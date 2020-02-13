@@ -5,22 +5,14 @@ class TestClass {
 
   @Memoize()
   get calculatedProperty() {
-    this.counters['calculatedProperty'] =
-      (this.counters['calculatedProperty'] || 0) + 1
-    return Array.from({ length: 100 }, (_, i) => i).reduce(
-      (s, v) => s + v * v,
-      0
-    )
+    this.counters['calculatedProperty'] = (this.counters['calculatedProperty'] || 0) + 1
+    return Array.from({ length: 100 }, (_, i) => i).reduce((s, v) => s + v * v, 0)
   }
 
   @Memoize()
   methodWithoutArgs() {
-    this.counters['methodWithoutArgs'] =
-      (this.counters['methodWithoutArgs'] || 0) + 1
-    return Array.from({ length: 100 }, (_, i) => i).reduce(
-      (s, v) => s + v * v * v,
-      0
-    )
+    this.counters['methodWithoutArgs'] = (this.counters['methodWithoutArgs'] || 0) + 1
+    return Array.from({ length: 100 }, (_, i) => i).reduce((s, v) => s + v * v * v, 0)
   }
 
   @Memoize()
@@ -29,6 +21,8 @@ class TestClass {
     return a * a + b * b
   }
 }
+
+class DerivedClass extends TestClass {}
 
 test('should calculate the property once', () => {
   const c = new TestClass()
@@ -49,7 +43,14 @@ test('should call method with arguments once', () => {
   c.methodWithArgs(100, 200)
   c.methodWithArgs(100, 200)
   expect(c.counters['methodWithArgs']).toBe(1)
+
   c.methodWithArgs(300, 400)
   c.methodWithArgs(300, 400)
   expect(c.counters['methodWithArgs']).toBe(2)
+
+  const d = new DerivedClass()
+  d.methodWithArgs(300, 400)
+  expect(d.methodWithArgs(1, 2)).toBe(5)
+  expect(d.methodWithArgs(1, 2)).toBe(5)
+  expect(d.counters['methodWithArgs']).toBe(2)
 })
