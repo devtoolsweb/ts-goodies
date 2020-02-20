@@ -3,10 +3,9 @@
   "description": "Useful TypeScript classes suitable for both browser and Node.js",
   "devDependencies": {
     "@types/jest": "latest",
-    "dts-bundle": "latest",
     "jest": "latest",
-    "make-dts-bundle": "latest",
     "rollup": "latest",
+    "rollup-plugin-dts": "latest",
     "rollup-plugin-terser": "latest",
     "rollup-plugin-typescript2": "latest",
     "ts-jest": "latest",
@@ -19,8 +18,7 @@
   "name": "@aperos/ts-goodies",
   "main": "dist/index.js",
   "scripts": {
-    "build": "rollup -c && npm run build-dts",
-    "build-dts": "make-dts-bundle",
+    "build": "rollup -c",
     "build-production": "BUILD=production npm run build",
     "clean": "rm -rf build dist",
     "prepare": "npm run clean && npm run build-production",
