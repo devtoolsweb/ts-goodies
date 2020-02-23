@@ -6,7 +6,11 @@ export const Memoize = (hashFn?: MemoizeHashFunction) => {
     propertyKey: string,
     descriptor: PropertyDescriptor
   ) => {
-    const key = Symbol.for(`${target.constructor.name}.${propertyKey}`)
+    let name = target.constructor.name
+    if (name === 'Function') {
+      name = `${(target as any).name}Constructor`
+    }
+    const key = Symbol.for(`${name}.${propertyKey}`)
     if (descriptor.value instanceof Function) {
       descriptor.value = makeFunction(key, descriptor.value, hashFn)
     } else if (descriptor.get) {
