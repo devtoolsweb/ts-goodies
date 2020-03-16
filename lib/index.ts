@@ -1,4 +1,5 @@
 export * from './bit_flags'
+export * from './math_utils'
 export * from './memoize'
 export * from './string_utils'
 export * from './types'
