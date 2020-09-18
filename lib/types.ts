@@ -13,9 +13,17 @@ export type Constructor<T = {}> = new (...args: any[]) => T
 //   [Symbol.iterator]: () => IterableIterator<T>
 // }
 
-export type ArrayLengthMutationKeys = 'splice' | 'push' | 'pop' | 'shift' | 'unshift' | number
+export type ArrayLengthMutationKeys =
+  | 'splice'
+  | 'push'
+  | 'pop'
+  | 'shift'
+  | 'unshift'
+  | number
 
-export type ArrayItems<T extends Array<any>> = T extends Array<infer TItems> ? TItems : never
+export type ArrayItems<T extends Array<any>> = T extends Array<infer TItems>
+  ? TItems
+  : never
 
 export type FixedLengthArray<T extends any[]> = Pick<
   T,
@@ -31,3 +39,11 @@ export type IndexedFixedLengthArray<T extends any[]> = Pick<
   [I: number]: T extends Array<infer TItems> ? TItems : never
   [Symbol.iterator]: () => IterableIterator<ArrayItems<T>>
 }
+
+export type JsonValue =
+  | null
+  | boolean
+  | number
+  | string
+  | JsonValue[]
+  | { [prop: string]: JsonValue }
