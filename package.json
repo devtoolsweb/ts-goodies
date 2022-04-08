@@ -13,8 +13,6 @@
     "rollup-plugin-typescript2": "latest",
     "ts-jest": "latest",
     "ts-node": "latest",
-    "tslint": "latest",
-    "tslint-config-standard": "latest",
     "typescript": "latest"
   },
   "license": "MIT",
