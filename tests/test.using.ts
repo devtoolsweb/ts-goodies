@@ -45,7 +45,7 @@ test('should dispose the resource asynchronously', async () => {
   const disposable = new Disposable()
   const result = using(disposable, () => {
     expect(disposable.isDisposed).toBeFalsy()
-    return new Promise(resolve => {
+    return new Promise<void>(resolve => {
       expect(disposable.isDisposed).toBeFalsy()
       resolve()
     })
@@ -76,7 +76,7 @@ test('should throw error if providing undefined', () => {
 test('should dispose the asynchronous resource', async () => {
   const disposable = new AsyncDisposable()
   const result = using(disposable, () => {
-    return new Promise(resolve => resolve())
+    return new Promise<void>(resolve => resolve())
   })
 
   expect(disposable.isDisposed).toBeFalsy()
