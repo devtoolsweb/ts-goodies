@@ -15,7 +15,7 @@
     "typescript": "latest"
   },
   "license": "MIT",
-  "name": "@aperos/ts-goodies",
+  "name": "@devtoolsweb/ts-goodies",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "scripts": {

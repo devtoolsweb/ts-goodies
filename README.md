@@ -1,4 +1,4 @@
-# @aperos/ts-goodies
+# @devtoolsweb/ts-goodies
 
 Useful TypeScript classes suitable for both browser and Node.js.
 
