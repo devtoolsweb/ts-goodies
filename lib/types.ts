@@ -1,17 +1,8 @@
-export interface IConstructor<T = {}> {
-  new (...args: any[]): T
+export interface IConstructor<T = object> {
+    new (...args: unknown[]): T
 }
 
-export type Constructor<T = {}> = new (...args: any[]) => T
-
-// export type FixedLengthArray<T, L extends number, TObj = [T, ...Array<T>]> = Pick<
-//   TObj,
-// Exclude<keyof TObj, ArrayLengthMutationKeys>
-// > & {
-//   readonly length: L
-//   [I: number]: T
-//   [Symbol.iterator]: () => IterableIterator<T>
-// }
+export type Constructor<T = object> = new (...args: unknown[]) => T
 
 export type ArrayLengthMutationKeys =
   | 'splice'
@@ -21,23 +12,23 @@ export type ArrayLengthMutationKeys =
   | 'unshift'
   | number
 
-export type ArrayItems<T extends Array<any>> = T extends Array<infer TItems>
-  ? TItems
-  : never
+export type ArrayItems<T extends Array<unknown>> = T extends Array<infer TItems>
+    ? TItems
+    : never
 
-export type FixedLengthArray<T extends any[]> = Pick<
-  T,
-  Exclude<keyof T, ArrayLengthMutationKeys>
+export type FixedLengthArray<T extends unknown[]> = Pick<
+T,
+Exclude<keyof T, ArrayLengthMutationKeys>
 > & {
-  [Symbol.iterator]: () => IterableIterator<ArrayItems<T>>
+    [Symbol.iterator]: () => IterableIterator<ArrayItems<T>>
 }
 
-export type IndexedFixedLengthArray<T extends any[]> = Pick<
-  T,
-  Exclude<keyof T, ArrayLengthMutationKeys>
+export type IndexedFixedLengthArray<T extends unknown[]> = Pick<
+T,
+Exclude<keyof T, ArrayLengthMutationKeys>
 > & {
-  [I: number]: T extends Array<infer TItems> ? TItems : never
-  [Symbol.iterator]: () => IterableIterator<ArrayItems<T>>
+    [I: number]: T extends Array<infer TItems> ? TItems : never
+    [Symbol.iterator]: () => IterableIterator<ArrayItems<T>>
 }
 
 export type JsonValue =

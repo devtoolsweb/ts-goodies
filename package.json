@@ -1,6 +1,9 @@
 {
   "author": "<aperos.dev@gmail.com>",
   "description": "Useful TypeScript classes suitable for both browser and Node.js",
+  "dependencies": {
+    "type-fest": "latest"
+  },
   "devDependencies": {
     "@types/jest": "latest",
     "jest": "latest",
