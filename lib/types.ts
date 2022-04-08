@@ -2,6 +2,7 @@ export interface IConstructor<T = object> {
     new (...args: unknown[]): T
 }
 
+// @deprecated Use type Constructor from the 'type-fest' package instead
 export type Constructor<T = object> = new (...args: unknown[]) => T
 
 export type ArrayLengthMutationKeys =
