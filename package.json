@@ -1,6 +1,9 @@
 {
-  "author": "<aperos.dev@gmail.com>",
+  "author": "elhombre <elhombre.dev@gmail.com>",
   "description": "Useful TypeScript classes suitable for both browser and Node.js",
+  "dependencies": {
+    "type-fest": "latest"
+  },
   "devDependencies": {
     "@types/jest": "latest",
     "jest": "latest",
@@ -10,12 +13,10 @@
     "rollup-plugin-typescript2": "latest",
     "ts-jest": "latest",
     "ts-node": "latest",
-    "tslint": "latest",
-    "tslint-config-standard": "latest",
     "typescript": "latest"
   },
   "license": "MIT",
-  "name": "@aperos/ts-goodies",
+  "name": "@devtoolsweb/ts-goodies",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
   "scripts": {
@@ -26,5 +27,5 @@
     "test": "jest"
   },
   "types": "dist/index.d.ts",
-  "version": "0.0.25"
+  "version": "0.1.1"
 }
