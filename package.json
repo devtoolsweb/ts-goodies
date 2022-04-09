@@ -1,0 +1,31 @@
+{
+  "author": "elhombre <elhombre.dev@gmail.com>",
+  "description": "Useful TypeScript classes suitable for both browser and Node.js",
+  "dependencies": {
+    "type-fest": "latest"
+  },
+  "devDependencies": {
+    "@types/jest": "latest",
+    "jest": "latest",
+    "rollup": "latest",
+    "rollup-plugin-dts": "latest",
+    "rollup-plugin-terser": "latest",
+    "rollup-plugin-typescript2": "latest",
+    "ts-jest": "latest",
+    "ts-node": "latest",
+    "typescript": "latest"
+  },
+  "license": "MIT",
+  "name": "@devtoolsweb/ts-goodies",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "build": "rollup -c",
+    "build-production": "BUILD=production npm run build",
+    "clean": "rm -rf build dist",
+    "prepare": "npm run clean && npm run build-production",
+    "test": "jest"
+  },
+  "types": "dist/index.d.ts",
+  "version": "0.1.1"
+}
