@@ -1,4 +1,4 @@
-import { Constructor } from './types'
+import { Constructor } from 'type-fest'
 
 /**
  * Each logical class property consumes 8 bytes in memory
@@ -108,7 +108,7 @@ class BFInfo {
  *
  * @param {Constructor} ctor Method
  */
-export function BitFlagged (ctor: Constructor) {
+export function BitFlagged<T> (ctor: Constructor<T>) {
     const p = ctor.prototype
     if (!bfMap.has(p)) {
         bfMap.set(p, new BFInfo())
