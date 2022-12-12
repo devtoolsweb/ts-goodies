@@ -6,11 +6,11 @@
   },
   "devDependencies": {
     "@types/jest": "latest",
+    "@types/node": "latest",
+    "dts-bundle-generator": "latest",
+    "esbuild": "latest",
+    "esbuild-node-externals": "latest",
     "jest": "latest",
-    "rollup": "latest",
-    "rollup-plugin-dts": "latest",
-    "rollup-plugin-terser": "latest",
-    "rollup-plugin-typescript2": "latest",
     "ts-jest": "latest",
     "ts-node": "latest",
     "typescript": "latest"
@@ -24,8 +24,7 @@
     "url": "https://github.com/devtoolsweb/ts-goodies.git"
   },
   "scripts": {
-    "build": "rollup -c",
-    "build-production": "BUILD=production npm run build",
+    "build": "ts-node esbuild.config.ts && dts-bundle-generator -o dist/index.d.ts lib/index.ts",
     "clean": "rm -rf build dist",
     "prepare": "npm run clean && npm run build-production",
     "test": "jest"
